@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-// encrypt
+// encrypt >>
 var (
 	enc = binary.BigEndian
 )
