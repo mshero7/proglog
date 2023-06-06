@@ -9,3 +9,29 @@ message Record {
     uint64 offset = 2;
 }
 
+// 컴파일러가 생성해야 할 서비스.
+// rpc : 서비스의 엔드포인트
+service Log {
+    rpc Produce(ProduceRequest) returns (ProduceResponse) {}
+    rpc Consume(ConsumeRequest) returns (ConsumeResponse) {}
+    // 서버측 스트리밍 RPC
+    rpc ConsumeStream(ConsumeRequest) returns (stream ConsumeResponse) {}
+    // 양방향 스트리밍 RPC
+    rpc ProduceStream(stream ProduceRequest) returns (stream ProduceResponse) {}
+}
+
+message ProduceRequest {
+    Record record = 1; // record ID``
+}
+
+message ProduceResponse {
+    uint64 offset = 1;
+}
+
+message ConsumeRequest {
+    uint64 offset = 1;
+}
+
+message ConsumeResponse {
+    Record record = 1;
+}

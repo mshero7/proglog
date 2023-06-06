@@ -1,7 +1,6 @@
 package log
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -125,7 +124,8 @@ func (l *Log) Read(off uint64) (*api.Record, error) {
 		}
 	}
 	if s == nil || s.nextOffset <= off {
-		return nil, fmt.Errorf("offset out of range: %d", off)
+		// return nil, fmt.Errorf("offset out of range: %d", off) 기존 에러
+		return nil, api.ErrOffsetOutOfRange{Offset: off} // GRPC error
 	}
 
 	return s.Read(off)
